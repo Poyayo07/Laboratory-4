@@ -16,7 +16,8 @@ API_KEY = os.getenv("LAB4_API_KEY")
 
 # Check if API key is provided
 def verify_api_key(request: Request):
-    api_key = request.headers.get("X-API-KEY")
+    # Check API key from both headers and query parameters
+    api_key = request.headers.get("X-API-KEY") or request.query_params.get("api_key")
     if api_key != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid API Key")
     return api_key
